@@ -12,7 +12,7 @@ connectMongoDB();
 
 // Middlewre
 app.use(express.json())
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({ extended: false }))
 
 // Endpoints
 app.use('/api/users', UserRoute)
@@ -20,5 +20,5 @@ app.use('/api/notes', NotesRoute)
 
 // Sever start
 app.listen(port, hostname, () => {
-  console.log(`Server is listening at port: http://${hostname}:${port}`);
+    console.log(`Server is listening at port: http://${hostname}:${port}`);
 })
