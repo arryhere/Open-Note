@@ -1,5 +1,6 @@
 import express from 'express';
 import UserController from '../controller/UserController.js';
+import fetchUser from '../middleware/fetchUser.js';
 
 const router = express.Router()
 
@@ -17,20 +18,20 @@ router.post('/test', (req, res) => {
     })
 })
 
-// user endpoint
+// user endpoints
 router.post('/signup', (req, res) => {
-    const userController = new UserController()
-    userController.signupUser(req, res)
+    const userController = new UserController();
+    userController.signupUser(req, res);
 })
 
 router.post('/login', (req, res) => {
-    const userController = new UserController()
-    userController.loginUser(req, res)
+    const userController = new UserController();
+    userController.loginUser(req, res);
 })
 
-router.get('/profile', (req, res) => {
-    const userController = new UserController()
-    userController.profile(req, res)
+router.post('/profile', fetchUser, (req, res) => {
+    const userController = new UserController();
+    userController.profile(req, res);
 })
 
 export default router

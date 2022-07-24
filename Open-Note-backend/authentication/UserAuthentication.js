@@ -11,4 +11,4 @@ function authToken(userId) {
     return token
 }
 
-export default { authToken }
+export default { authToken, JWT_SECRET }

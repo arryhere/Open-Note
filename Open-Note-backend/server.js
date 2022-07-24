@@ -1,7 +1,7 @@
 import express from 'express';
 import connectMongoDB from './database/connectMongoDB.js';
 import UserRoute from './routes/UserRoute.js'
-import NotesRoute from './routes/NotesRoute.js'
+import NoteRoute from './routes/NoteRoute.js'
 
 const app = express();
 const port = 4000
@@ -15,8 +15,8 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 // Endpoints
-app.use('/api/users', UserRoute)
-app.use('/api/notes', NotesRoute)
+app.use('/api/user', UserRoute)
+app.use('/api/notes', NoteRoute)
 
 // Sever start
 app.listen(port, hostname, () => {
