@@ -1,0 +1,22 @@
+.icons {
+  height: 40px;
+  width: 40px;
+  border-radius: 100px;
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.logo-brand,
+.nav-link {
+  border-radius: 5px;
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.icons:hover,
+.logo-brand:hover,
+.nav-link:hover {
+  opacity: 1;
+  background-color: rgba(95, 99, 104, 0.3);
+  transition: all 200ms;
+}

@@ -1,9 +1,18 @@
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import NavBar from './components/NavBar.jsx';
+import Home from './components/Home.jsx';
+import About from './components/About.jsx';
 
 function App() {
   return (
     <>
-    <h1>Hello</h1>
+      <Router>
+        <NavBar />
+        <Routes>
+          <Route exact path='/' element={<Home />} />
+          <Route exact path='/about' element={<About />} />
+        </Routes>
+      </Router>
     </>
   );
 }
