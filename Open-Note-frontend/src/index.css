@@ -1,3 +1,28 @@
+:root {
+  --light: rgb(255, 255, 255);
+  --dark: rgb(32, 33, 36);
+  --overlay-light: rgba(95, 99, 104, 0.157);
+  --overlay-dark: rgba(154, 160, 166, 0.157);
+  --active-light: rgb(254, 239, 195);
+  --active-dark: rgb(65, 51, 28);
+}
+
+.bg-light {
+  background-color: var(--light) !important;
+}
+
+.bg-dark {
+  background-color: var(--dark) !important;
+}
+
+.text-light {
+  color: var(--light) !important;
+}
+
+.text-dark {
+  color: var(--dark) !important;
+}
+
 .icons {
   height: 40px;
   width: 40px;
@@ -6,17 +31,89 @@
   cursor: pointer;
 }
 
-.logo-brand,
 .nav-link {
   border-radius: 5px;
   opacity: 0.9;
   cursor: pointer;
 }
 
-.icons:hover,
-.logo-brand:hover,
-.nav-link:hover {
+.active-light {
   opacity: 1;
-  background-color: rgba(95, 99, 104, 0.3);
+  background-color: rgb(254, 239, 195);
+}
+
+.active-dark {
+  opacity: 1;
+  background-color: rgb(65, 51, 28);
+}
+
+.hover-light:hover {
+  opacity: 1;
+  background-color: var(--overlay-light);
   transition: all 200ms;
+}
+
+.hover-dark:hover {
+  opacity: 1;
+  background-color: var(--overlay-dark);
+  transition: all 200ms;
+}
+
+.hover-light:active {
+  background-color: rgb(254, 239, 195);
+}
+
+.hover-dark:active {
+  background-color: rgb(65, 51, 28);
+}
+
+.input-text-light:focus {
+  border-color: var(--active-light) !important;
+  box-shadow: 0 1px 1px var(--active-light) inset, 0 0 8px var(--active-light) !important;
+  outline: 0 none !important;
+}
+
+.input-text-dark:focus {
+  border-color: var(--active-dark) !important;
+  box-shadow: 0 1px 1px var(--active-dark) inset, 0 0 8px var(--active-dark) !important;
+  outline: 0 none !important;
+}
+
+.card:hover {
+  filter: drop-shadow(0 20px 13px rgb(0 0 0 / 0.03)) drop-shadow(0 8px 5px rgb(0 0 0 / 0.08));
+  transition: all 300ms;
+}
+
+.navbar-dropShadow-dark {
+  filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.06));
+}
+
+.navbar-dropShadow-light {
+  filter: drop-shadow(0 1px 2px rgba(255, 255, 255, 0.1)) drop-shadow(0 1px 1px rgba(255, 255, 255, 0.06));
+}
+
+.btn-light {
+  color: var(--dark);
+  background-color: var(--active-light);
+  border: none;
+}
+
+.btn-dark {
+  color: var(--light);
+  background-color: var(--active-dark);
+  border: none;
+}
+
+.btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: var(--active-light) !important;
+}
+
+.btn-light:active {
+  background-color: var(--overlay-light) !important;
+}
+
+.btn-dark:active {
+  background-color: var(--overlay-dark) !important;
 }
