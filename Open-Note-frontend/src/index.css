@@ -117,3 +117,14 @@
 .btn-dark:active {
   background-color: var(--overlay-dark) !important;
 }
+
+.tag{
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-size: 11px;
+  background-color: var(--active-light);
+}
+
+label{
+  cursor: pointer;
+}

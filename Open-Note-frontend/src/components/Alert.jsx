@@ -2,10 +2,9 @@ import React from 'react'
 
 export default function Alert(props) {
   return (
-    <>
-      <div className="alert alert-warning" role="alert">
-        A simple warning alert—check it out!
-      </div>
+    <>{props.alert && <div className={`alert ${props.alert.success === true ? 'alert-success' : 'alert-danger'}`} role="alert">
+      <span>{props.alert.message}</span>
+    </div>}
     </>
   )
 }
