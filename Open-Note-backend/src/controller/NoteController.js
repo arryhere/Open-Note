@@ -31,7 +31,7 @@ class NoteController {
     }
   }
 
-  updateNote = async (req, res) => {
+  editNote = async (req, res) => {
     const { title, description, tag } = req.body;
     // note object
     const newNote = {};
@@ -44,7 +44,6 @@ class NoteController {
       res.status(404).json({ status: 'db-note-fetch-failed', response: 'note not found' });
     } else {
       let bool = (note.user.toString() === req.user.id)
-      console.log(bool);
       if (note.user.toString() !== req.user.id) {
         res.status(401).json({ status: 'failed', response: 'unauthorized' });
       } else {

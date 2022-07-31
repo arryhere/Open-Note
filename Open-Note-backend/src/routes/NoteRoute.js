@@ -32,9 +32,9 @@ router.post('/addNote', fetchUser, (req, res) => {
     noteController.addNote(req, res);
 })
 
-router.put('/updateNote/:id', fetchUser, (req, res) => {
+router.put('/editNote/:id', fetchUser, (req, res) => {
     const noteController = new NoteController();
-    noteController.updateNote(req, res);
+    noteController.editNote(req, res);
 })
 
 router.delete('/deleteNote/:id', fetchUser, (req, res) => {
