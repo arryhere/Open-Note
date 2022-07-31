@@ -9,12 +9,12 @@ class UserController {
     //user validation
     const { error, value } = UserValidaton.signupSchema.validate(req.body, { abortEarly: false });
     if (error) {
-      res.status(400).json({ status: 'joi-user-signup-failed', response: error.details });
+      res.status(400).json({ success: false, message: 'Signup validation failed', data: error.details.map((e) => { return e.message }) });
     } else {
       //check email in db
       const checkEmailExist = await UserModel.findOne({ email: value.email });
       if (checkEmailExist) {
-        res.status(400).json({ status: 'db-user-check-failed', response: 'email already exists' });
+        res.status(400).json({ success: false, message: 'Email already exists', data: JSON.stringify(value) });
       } else {
         //encryption
         const data = {
@@ -27,9 +27,9 @@ class UserController {
         const user = new UserModel(data);
         user.save((error, user) => {
           if (error) {
-            res.status(500).json({ status: 'db-user-insert-failed', response: error.message })
+            res.status(500).json({success: false,  message: 'Signup failed', data: error.message })
           } else {
-            res.status(200).json({ status: 'db-user-insert-success', authToken: UserAuthentication.authToken(user.id) })
+            res.status(200).json({ success: true, message: 'Signup successful', data: UserAuthentication.authToken(user.id) })
           }
         })
       }
@@ -40,20 +40,20 @@ class UserController {
     //validation
     const { error, value } = UserValidaton.loginSchema.validate(req.body, { abortEarly: false });
     if (error) {
-      res.status(400).json({ status: 'joi-user-login-failed', response: error.details });
+      res.status(400).json({ success: false, message: 'Login validation failed', data: error.details.map((e) => { return e.message }) });
     } else {
       //check email in db
       const user = await UserModel.findOne({ email: value.email });
       if (!user) {
-        res.status(400).json({ status: 'db-user-login-failed', response: 'Please enter proper credentials' });
+        res.status(400).json({ success: false, message: 'Please enter proper credentials', data: JSON.stringify(value) });
       } else {
         //check password
         const passwordCompare = await UserEncryption.decrypt(value.password, user.password);
         if (!passwordCompare) {
-          res.status(400).json({ status: 'db-user-login-failed', response: 'Please enter proper credentials' });
+          res.status(400).json({ success: false, message: 'Please enter proper credentials', data: JSON.stringify(value) });
         } else {
           //send token if authenticated
-          res.status(200).json({ status: 'db-user-check-success', authToken: UserAuthentication.authToken(user.id) });
+          res.status(200).json({ success: true, message: 'Login successful', data: UserAuthentication.authToken(user.id) });
         }
       }
     }
@@ -63,12 +63,11 @@ class UserController {
     const userId = req.user.id;
     const user = await UserModel.findById({ _id: userId }).select('-password');
     res.status(200).json({
-      status: 'auth-success',
-      response: user
+      success: true,
+      message: 'Authentication successful',
+      data: user
     })
   }
 }
-
-
 
 export default UserController;

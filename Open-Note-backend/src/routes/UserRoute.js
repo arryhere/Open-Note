@@ -29,7 +29,7 @@ router.post('/login', (req, res) => {
     userController.loginUser(req, res);
 })
 
-router.post('/profile', fetchUser, (req, res) => {
+router.get('/profile', fetchUser, (req, res) => {
     const userController = new UserController();
     userController.profile(req, res);
 })

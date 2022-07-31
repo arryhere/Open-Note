@@ -12,20 +12,19 @@ class NoteController {
     //note validation
     const { error, value } = NotesValidation.notesSchema.validate(req.body, { abortEarly: false });
     if (error) {
-      res.status(400).json({ status: 'joi-notesValidtion-failed', response: error.details });
+      res.status(400).json({ message: 'Notes Validtion failed', data: error.details.map((e) => { return e.message }) });
     } else {
       //insert note
       const note = new NotesModel({
         user: req.user.id,
         title: value.title,
         description: value.description,
-        tag: value.tag
       })
       note.save((error, note) => {
         if (error) {
-          res.status(500).json({ status: 'db-note-insert-failed', response: error.message });
+          res.status(500).json({ message: 'Failed to add note', data: error.message });
         } else {
-          res.status(200).json({ status: 'db-note-insert-success', response: note });
+          res.status(200).json({ message: 'Note added successfully', data: note });
         }
       })
     }
@@ -37,18 +36,16 @@ class NoteController {
     const newNote = {};
     if (title) { newNote.title = title };
     if (description) { newNote.description = description };
-    if (tag) { newNote.tag = tag };
     // update note
-    let note = await NotesModel.findById(req.params.id);
+    const note = await NotesModel.findById(req.params.id);
     if (!note) {
-      res.status(404).json({ status: 'db-note-fetch-failed', response: 'note not found' });
+      res.status(404).json({ message: 'Note not found', data: '' });
     } else {
-      let bool = (note.user.toString() === req.user.id)
       if (note.user.toString() !== req.user.id) {
-        res.status(401).json({ status: 'failed', response: 'unauthorized' });
+        res.status(401).json({ message: 'Authentication failed', data: '' });
       } else {
-        note = await NotesModel.findByIdAndUpdate(req.params.id, { $set: newNote }, { new: true });
-        res.status(200).json({ status: 'db-note-update-success', response: note });
+        const result = await NotesModel.findByIdAndUpdate(req.params.id, { $set: newNote }, { new: true });
+        res.status(200).json({ message: 'Note updated successfully', data: result });
       }
     }
 
@@ -56,15 +53,15 @@ class NoteController {
 
   deleteNote = async (req, res) => {
     // delete note
-    let note = await NotesModel.findById(req.params.id);
+    const note = await NotesModel.findById(req.params.id);
     if (!note) {
-      res.status(404).json({ status: 'db-note-fetch-failed', response: 'note not found' });
+      res.status(404).json({ message: 'Note not found', data: '' });
     } else {
       if (note.user.toString() !== String(req.user.id)) {
-        res.status(401).json({ status: 'failed', response: 'unauthorized' });
+        res.status(401).json({ message: 'Authentication failed', data: '' });
       } else {
-        note = await NotesModel.findByIdAndDelete(req.params.id);
-        res.status(200).json({ status: 'db-note-deleted-success', response: note });
+        const result = await NotesModel.findByIdAndDelete(req.params.id);
+        res.status(200).json({ message: 'Note deleted successfully', data: result });
       }
     }
   }
