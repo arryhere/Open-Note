@@ -75,12 +75,17 @@
 
 .input-text-dark:focus {
   border-color: var(--active-dark) !important;
-  box-shadow: 0 1px 1px var(--active-dark) inset, 0 0 8px var(--active-dark) !important;
+  box-shadow: 0 1px 1px var(--active-light) inset, 0 0 8px var(--active-light) !important;
   outline: 0 none !important;
 }
 
-.card:hover {
+.card-light:hover {
   filter: drop-shadow(0 20px 13px rgb(0 0 0 / 0.03)) drop-shadow(0 8px 5px rgb(0 0 0 / 0.08));
+  transition: all 300ms;
+}
+
+.card-dark:hover {
+  filter: drop-shadow(0 20px 13px rgba(255, 255, 255, 0.03)) drop-shadow(0 8px 5px rgba(255, 255, 255, 0.08));
   transition: all 300ms;
 }
 
@@ -127,4 +132,12 @@
 
 label{
   cursor: pointer;
+}
+
+input:disabled{
+  border: 1px solid rgb(255, 140, 140) !important;
+}
+
+.profile-border{
+  border: 1px solid rgb(140, 255, 194) !important;
 }

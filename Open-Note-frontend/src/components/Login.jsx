@@ -1,8 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import config from '../config/config';
 import { useNavigate } from 'react-router-dom';
+import ThemeContext from '../context/theme/ThemeContext';
 
 export default function Login(props) {
+  const themeContext = useContext(ThemeContext);
+  const { getTheme } = themeContext;
+  const theme = getTheme();
+  const altTheme = theme === 'light' ? 'dark' : 'light';
 
   const hostname = config.backendHostname;
   const port = config.backendPort;
@@ -38,19 +43,19 @@ export default function Login(props) {
   return (
     <>
       <div className='container my-3'>
-        <h1 className='display-4 mb-3 text-center'>Login</h1>
+        <h1 className={`display-4 mb-3 text-center text-${altTheme}`}>Login</h1>
         <form onSubmit={handleSubmit}>
           <div className='mb-3'>
-            <label htmlFor="login-email" className="form-label">Email address</label>
-            <input onChange={handleLoginCredentials} type="email" className="form-control input-text-light"
+            <label htmlFor="login-email" className={`form-label text-${altTheme}`}>Email address</label>
+            <input onChange={handleLoginCredentials} type="email" className={`form-control bg-${theme} text-${altTheme} input-text-${theme}`}
               name='email' value={loginCredentials.email} id="login-email" placeholder='enter your email' />
           </div>
           <div className="mb-3">
-            <label htmlFor="login-pasword" className="form-label">Password</label>
-            <input onChange={handleLoginCredentials} type="password" className="form-control input-text-light"
+            <label htmlFor="login-pasword" className={`form-label text-${altTheme}`}>Password</label>
+            <input onChange={handleLoginCredentials} type="password" className={`form-control bg-${theme} text-${altTheme} input-text-${theme}`}
               name='password' value={loginCredentials.password} id="login-pasword" placeholder='enter your password' />
           </div>
-          <button type="submit" className="btn btn-light">Submit</button>
+          <button type="submit" className={`btn btn-${theme}`}>Submit</button>
         </form>
       </div>
     </>

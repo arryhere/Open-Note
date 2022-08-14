@@ -8,31 +8,35 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import Alert from './components/Alert';
 import Profile from './components/Profile';
+import ThemeState from './context/theme/ThemeState';
 
 function App() {
+
   const [alert, setAlert] = useState(null);
   const showAlert = (success, message) => {
-    setAlert({success, message});
+    setAlert({ success, message });
     setTimeout(() => {
       setAlert(null)
     }, 3000);
   }
-  
+
   return (
     <>
-      <NoteState>
-        <Router>
-          <NavBar />
-          <Alert alert={alert} />
-          <Routes>
-            <Route exact path='/' element={<Home />} />
-            <Route exact path='/about' element={<About />} />
-            <Route exact path='/signup' element={<Signup showAlert={showAlert} />} />
-            <Route exact path='/login' element={<Login showAlert={showAlert} />} />
-            <Route exact path='/profile' element={<Profile />} />
-          </Routes>
-        </Router>
-      </NoteState>
+      <ThemeState>
+        <NoteState>
+          <Router>
+            <NavBar />
+            <Alert alert={alert} />
+            <Routes>
+              <Route exact path='/' element={<Home />} />
+              <Route exact path='/about' element={<About />} />
+              <Route exact path='/signup' element={<Signup showAlert={showAlert} />} />
+              <Route exact path='/login' element={<Login showAlert={showAlert} />} />
+              <Route exact path='/profile' element={<Profile />} />
+            </Routes>
+          </Router>
+        </NoteState>
+      </ThemeState>
     </>
   );
 }

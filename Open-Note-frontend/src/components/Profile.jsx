@@ -1,7 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import config from '../config/config';
+import ThemeContext from '../context/theme/ThemeContext';
 
 export default function Profile() {
+  const themeContext = useContext(ThemeContext);
+  const { getTheme } = themeContext;
+  const theme = getTheme();
+  const altTheme = theme === 'light' ? 'dark' : 'light';
 
   const hostname = config.backendHostname;
   const port = config.backendPort;
@@ -25,6 +30,10 @@ export default function Profile() {
     }
   }
 
+  const handleSave = () => {
+      setRead(true);
+  }
+
   const fetchUer = async (e) => {
     const response = await fetch(profileEndPoint, {
       method: 'GET',
@@ -42,25 +51,25 @@ export default function Profile() {
   }
   return (
     <div className='container my-3'>
-      <h1 className='display-4 mb-3 text-center'>Profile</h1>
+      <h1 className={`display-4 mb-3 text-center text-${altTheme}`}>Profile</h1>
       <form>
         <div className='mb-3'>
-          <label htmlFor="signup-firstName" className="form-label">First Name</label>
-          <input type="text" className={`form-control input-text-light`}
+          <label htmlFor="signup-firstName" className={`form-label text-${altTheme}`}>First Name</label>
+          <input type="text" className={`form-control bg-${theme} text-${altTheme} input-text-${theme} profile-border`}
             name='firstName' value={user.firstName} id="signup-firstName" placeholder='enter your first name' disabled={read} />
         </div>
         <div className='mb-3'>
-          <label htmlFor="signup-lastName" className="form-label">Last Name</label>
-          <input type="text" className={`form-control input-text-light`}
+          <label htmlFor="signup-lastName" className={`form-label text-${altTheme}`}>Last Name</label>
+          <input type="text" className={`form-control bg-${theme} text-${altTheme} input-text-${theme} profile-border`}
             name='lastName' value={user.lastName} id="signup-lastName" placeholder='enter your last name' disabled={read} />
         </div>
         <div className='mb-3'>
-          <label htmlFor="signup-email" className="form-label">Email address</label>
-          <input type="email" className={`form-control input-text-light`}
+          <label htmlFor="signup-email" className={`form-label text-${altTheme}`}>Email address</label>
+          <input type="email" className={`form-control bg-${theme} text-${altTheme} input-text-${theme} profile-border`}
             name='email' value={user.email} id="signup-email" placeholder='enter your email' disabled />
         </div>
         <button onClick={handleRead} type="button" className="btn btn-light me-2">Edit</button>
-        <button type="button" className="btn btn-light me-2">Save</button>
+        <button onClick={handleSave} type="button" className="btn btn-light me-2">Save</button>
       </form>
     </div>
   )
