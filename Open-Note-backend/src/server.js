@@ -3,7 +3,7 @@ import cors from 'cors';
 import connectMongoDB from './database/connectMongoDB.js';
 import UserRoute from './routes/UserRoute.js'
 import NoteRoute from './routes/NoteRoute.js'
-import config from '../config/config.js';
+import config from './config/config.js';
 
 const app = express();
 const hostname = config.hostname;

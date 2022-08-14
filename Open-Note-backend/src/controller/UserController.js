@@ -9,7 +9,7 @@ class UserController {
     //user validation
     const { error, value } = UserValidaton.signupSchema.validate(req.body, { abortEarly: false });
     if (error) {
-      res.status(400).json({ success: false, message: 'Signup validation failed', data: error.details.map((e) => { return e.message }) });
+      res.status(400).json({ success: false, message: 'Signup validation failed', data: error.details.map((e) => { return e.message.replace(/"/gi, '') }) });
     } else {
       //check email in db
       const checkEmailExist = await UserModel.findOne({ email: value.email });
@@ -40,17 +40,17 @@ class UserController {
     //validation
     const { error, value } = UserValidaton.loginSchema.validate(req.body, { abortEarly: false });
     if (error) {
-      res.status(400).json({ success: false, message: 'Login validation failed', data: error.details.map((e) => { return e.message }) });
+      res.status(400).json({ success: false, message: 'Login validation failed', data: error.details.map((e) => { return e.message.replace(/"/gi, '') }) });
     } else {
       //check email in db
       const user = await UserModel.findOne({ email: value.email });
       if (!user) {
-        res.status(400).json({ success: false, message: 'Please enter proper credentials', data: JSON.stringify(value) });
+        res.status(400).json({ success: false, message: 'Please enter proper credentials', data: null });
       } else {
         //check password
         const passwordCompare = await UserEncryption.decrypt(value.password, user.password);
         if (!passwordCompare) {
-          res.status(400).json({ success: false, message: 'Please enter proper credentials', data: JSON.stringify(value) });
+          res.status(400).json({ success: false, message: 'Please enter proper credentials', data: null });
         } else {
           //send token if authenticated
           res.status(200).json({ success: true, message: 'Login successful', data: UserAuthentication.authToken(user.id) });
