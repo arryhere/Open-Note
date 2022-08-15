@@ -11,7 +11,7 @@ const ThemeState = (props) => {
     } else if (theme === 'dark') {
       return 'dark';
     } else {
-      return 'light';
+      return 'dark';
     }
   }
 

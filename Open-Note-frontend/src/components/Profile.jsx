@@ -68,8 +68,8 @@ export default function Profile() {
           <input type="email" className={`form-control bg-${theme} text-${altTheme} input-text-${theme} profile-border`}
             name='email' value={user.email} id="signup-email" placeholder='enter your email' disabled />
         </div>
-        <button onClick={handleRead} type="button" className="btn btn-light me-2">Edit</button>
-        <button onClick={handleSave} type="button" className="btn btn-light me-2">Save</button>
+        <button onClick={handleRead} type="button" className={`btn btn-${theme} me-2`}>Edit</button>
+        <button onClick={handleSave} type="button" className={`btn btn-${theme} me-2`}>Save</button>
       </form>
     </div>
   )

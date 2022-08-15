@@ -112,7 +112,7 @@
 .btn:focus {
   outline: none !important;
   box-shadow: none !important;
-  background-color: var(--active-light) !important;
+  background-color: none !important;
 }
 
 .btn-light:active {

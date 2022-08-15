@@ -12,11 +12,13 @@ export default function NavBar() {
   const path = useLocation().pathname;
   const [log, setLog] = useState(localStorage.getItem('auth-token'))
   const navigate = useNavigate()
+
   const handleLogOut = () => {
     localStorage.removeItem('auth-token');
     setLog(null);
-    window.location.reload(true);
+    navigate(0);
   }
+  
   const navigateProfile = () => {
     navigate('/profile');
   }

@@ -1,7 +1,8 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import config from '../config/config';
 import { useNavigate } from 'react-router-dom';
 import ThemeContext from '../context/theme/ThemeContext';
+import { toast } from 'react-toastify';
 
 export default function Login(props) {
   const themeContext = useContext(ThemeContext);
@@ -13,6 +14,7 @@ export default function Login(props) {
   const port = config.backendPort;
   const URL = `http://${hostname}:${port}`;
   const loginEndPoint = `${URL}/api/user/login`;
+
   const navigate = useNavigate();
 
   const [loginCredentials, setLoginCredentials] = useState({ email: '', password: '' });
@@ -31,12 +33,13 @@ export default function Login(props) {
       body: JSON.stringify({ email: loginCredentials.email, password: loginCredentials.password })
     })
     const result = await response.json();
+
     if (result.success === true) {
       localStorage.setItem('auth-token', result.data);
-      navigate('/', { replace: true })
-      window.location.reload(true);
+      navigate('/');
+      navigate(0);
     } else {
-      props.showAlert(result.success, result.message);
+      toast.error(result.message);
     }
   }
 

@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import config from '../config/config';
 import { useNavigate } from 'react-router-dom';
 import ThemeContext from '../context/theme/ThemeContext';
-
+import { toast } from 'react-toastify';
 
 export default function Signup(props) {
   const themeContext = useContext(ThemeContext);
@@ -42,9 +42,9 @@ export default function Signup(props) {
     if (result.success === true) {
       localStorage.setItem('auth-token', result.data);
       navigate('/', { replace: true })
-      window.location.reload(true);
+      navigate(0);
     } else {
-      props.showAlert(result.success, result.message);
+      toast.error(result.message);
     }
   }
 
