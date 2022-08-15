@@ -18,7 +18,7 @@ function App() {
 
   return (
     <>
-      <ToastContainer theme={theme} position="top-center" autoClose={2000} hideProgressBar={false} newestOnTop={false}
+      <ToastContainer theme={theme} position="top-center" autoClose={2500} hideProgressBar={false} newestOnTop={false}
         closeOnClick={false} pauseOnFocusLoss={false} draggable pauseOnHover={false} transition={Flip}
       />
       <Router>

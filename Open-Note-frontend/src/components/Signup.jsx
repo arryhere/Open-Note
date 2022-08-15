@@ -1,20 +1,26 @@
 import React, { useState, useContext } from 'react'
-import config from '../config/config';
 import { useNavigate } from 'react-router-dom';
-import ThemeContext from '../context/theme/ThemeContext';
 import { toast } from 'react-toastify';
+import config from '../config/config';
+import ThemeContext from '../context/theme/ThemeContext';
+import AuthContext from '../context/auth/AuthContext';
 
-export default function Signup(props) {
-  const themeContext = useContext(ThemeContext);
-  const { getTheme } = themeContext;
-  const theme = getTheme();
-  const altTheme = theme === 'light' ? 'dark' : 'light';
+export default function Signup() {
+
+  const navigate = useNavigate();
 
   const hostname = config.backendHostname;
   const port = config.backendPort;
   const URL = `http://${hostname}:${port}`;
   const signupEndPoint = `${URL}/api/user/signup`;
-  const navigate = useNavigate();
+
+  const themeContext = useContext(ThemeContext);
+  const { getTheme } = themeContext;
+  const theme = getTheme();
+  const altTheme = theme === 'light' ? 'dark' : 'light';
+
+  const authContext = useContext(AuthContext);
+  const { setAuth } = authContext;
 
   const [signupCredentials, setSignupCredentials] = useState({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '' });
 
@@ -39,10 +45,12 @@ export default function Signup(props) {
         })
     })
     const result = await response.json();
+
     if (result.success === true) {
       localStorage.setItem('auth-token', result.data);
+      setAuth(true);
+      toast.success(result.message);
       navigate('/', { replace: true })
-      navigate(0);
     } else {
       toast.error(result.message);
     }

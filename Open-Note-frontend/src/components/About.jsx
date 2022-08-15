@@ -2,11 +2,12 @@ import React, { useContext } from 'react';
 import ThemeContext from '../context/theme/ThemeContext';
 
 export default function About() {
+
   const themeContext = useContext(ThemeContext);
   const { getTheme } = themeContext;
   const theme = getTheme();
   const altTheme = theme === 'light' ? 'dark' : 'light';
-  
+
   return (
     <div>
       <div className={`container my-3 p-3 bg-${theme} text-muted`}>

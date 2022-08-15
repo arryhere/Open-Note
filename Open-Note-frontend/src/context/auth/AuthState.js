@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import AuthContext from "./AuthContext";
 
 const AuthState = (props) => {
-  const [auth, setauth] = useState(localStorage.getItem('auth-token') ? 'authorized' : 'unauthorized');
+  const [auth, setauth] = useState(localStorage.getItem('auth-token') ? true : false);
 
   const setAuth = (auth) => {
-    setauth(auth)
+    setauth(auth);
   }
 
   return (

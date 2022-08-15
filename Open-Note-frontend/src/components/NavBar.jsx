@@ -1,24 +1,28 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ThemeContext from '../context/theme/ThemeContext';
+import AuthContext from '../context/auth/AuthContext';
 
 export default function NavBar() {
+
+  const path = useLocation().pathname;
+  const navigate = useNavigate();
+
   const themeContext = useContext(ThemeContext);
   const { getTheme, setTheme } = themeContext;
   const theme = getTheme();
   const altTheme = theme === 'light' ? 'dark' : 'light';
   theme === 'light' ? document.body.style.backgroundColor = 'rgb(255, 255, 255)' : document.body.style.backgroundColor = 'rgb(32, 33, 36)';
 
-  const path = useLocation().pathname;
-  const [log, setLog] = useState(localStorage.getItem('auth-token'))
-  const navigate = useNavigate()
+  const authContext = useContext(AuthContext);
+  const { auth, setAuth } = authContext;
 
   const handleLogOut = () => {
     localStorage.removeItem('auth-token');
-    setLog(null);
+    setAuth(false);
     navigate(0);
   }
-  
+
   const navigateProfile = () => {
     navigate('/profile');
   }
@@ -39,7 +43,7 @@ export default function NavBar() {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto">
-              {log && <li className="nav-item text-center m-1">
+              {auth && <li className="nav-item text-center m-1">
                 <Link className={`nav-link text-${altTheme} hover-${theme} ${path === '/' ? `active-${theme}` : ''}`} to="/">Home</Link>
               </li>}
               <li className={`nav-item text-center m-1`}>
@@ -48,22 +52,22 @@ export default function NavBar() {
             </ul>
             <div className="ms-auto d-lg-flex justify-content-center align-items-center">
               <ul className="navbar-nav me-auto">
-                {!log && <li className={`nav-item text-center m-1`}>
+                {!auth && <li className={`nav-item text-center m-1`}>
                   <Link className={`nav-link text-${altTheme} hover-${theme}`} to="/signup">SignUp</Link>
                 </li>}
-                {!log && <li className={`nav-item text-center m-1`}>
+                {!auth && <li className={`nav-item text-center m-1`}>
                   <Link className={`nav-link text-${altTheme} hover-${theme}`} to="/login">LogIn</Link>
                 </li>}
-                {log && <li onClick={handleLogOut} className={`nav-item text-center m-1`}>
+                {auth && <li onClick={handleLogOut} className={`nav-item text-center m-1`}>
                   <Link className={`nav-link text-${altTheme} hover-${theme}`} to="/">Logout</Link>
                 </li>}
               </ul>
               <div className='d-flex justify-content-center align-items-center my-1'>
-                {log && <div onClick={navigateProfile} className={`icons hover-${theme} my-auto mx-lg-2 d-flex justify-content-center align-items-center`}>
+                {auth && <div onClick={navigateProfile} className={`icons hover-${theme} my-auto mx-lg-2 d-flex justify-content-center align-items-center`}>
                   <i className={`bi bi-person-circle fs-5 text-${altTheme}`}></i>
                 </div>}
                 <div onClick={toggleTheme} className={`icons hover-${theme} my-auto mx-lg-2 d-flex justify-content-center align-items-center`}>
-                  <i className={`bi bi-${theme === 'light' ? 'moon' : 'sun'}-fill fs-5 text-${altTheme}`}></i>
+                  <i className={`bi bi-${theme === 'light' ? 'sun' : 'moon-stars'}-fill fs-5 text-${altTheme}`}></i>
                 </div>
               </div>
             </div>

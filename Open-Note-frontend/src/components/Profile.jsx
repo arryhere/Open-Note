@@ -3,24 +3,25 @@ import config from '../config/config';
 import ThemeContext from '../context/theme/ThemeContext';
 
 export default function Profile() {
-  const themeContext = useContext(ThemeContext);
-  const { getTheme } = themeContext;
-  const theme = getTheme();
-  const altTheme = theme === 'light' ? 'dark' : 'light';
 
   const hostname = config.backendHostname;
   const port = config.backendPort;
   const URL = `http://${hostname}:${port}`;
   const profileEndPoint = `${URL}/api/user/profile`;
 
+  const themeContext = useContext(ThemeContext);
+  const { getTheme } = themeContext;
+  const theme = getTheme();
+  const altTheme = theme === 'light' ? 'dark' : 'light';
+
   const [read, setRead] = useState(true);
-  const [user, setUser] = useState({firstName: '', lastName: '', email: ''});
+  const [user, setUser] = useState({ firstName: '', lastName: '', email: '' });
 
   useEffect(() => {
     fetchUer()
     // eslint-disable-next-line
   }, [])
-  
+
 
   const handleRead = () => {
     if (read === true) {
@@ -31,7 +32,7 @@ export default function Profile() {
   }
 
   const handleSave = () => {
-      setRead(true);
+    setRead(true);
   }
 
   const fetchUer = async (e) => {

@@ -5,6 +5,7 @@ import NoteCard from './NoteCard';
 import ThemeContext from '../context/theme/ThemeContext';
 
 export default function Notes() {
+
   const themeContext = useContext(ThemeContext);
   const { getTheme } = themeContext;
   const theme = getTheme();
