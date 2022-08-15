@@ -2,36 +2,12 @@ import express from 'express';
 import UserController from '../controller/UserController.js';
 import fetchUser from '../middleware/fetchUser.js';
 
-const router = express.Router()
-
-// test endpoints
-router.get('/test', (req, res) => {
-    res.status(200).json({
-        status: 'success',
-    })
-    // res.redirect('http://www.google.com')
-})
-router.post('/test', (req, res) => {
-    res.status(200).json({
-        status: 'success',
-        data: req.body
-    })
-})
+const router = express.Router();
+const userController = new UserController();
 
 // user endpoints
-router.post('/signup', (req, res) => {
-    const userController = new UserController();
-    userController.signupUser(req, res);
-})
-
-router.post('/login', (req, res) => {
-    const userController = new UserController();
-    userController.loginUser(req, res);
-})
-
-router.get('/profile', fetchUser, (req, res) => {
-    const userController = new UserController();
-    userController.profile(req, res);
-})
+router.post('/signup', userController.signupUser);
+router.post('/login', userController.loginUser);
+router.get('/profile', fetchUser, userController.getProfile);
 
 export default router
