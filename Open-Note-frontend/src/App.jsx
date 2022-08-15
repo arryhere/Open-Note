@@ -15,11 +15,15 @@ function App() {
   const { getTheme } = themeContext;
   const theme = getTheme();
   theme === 'light' ? document.body.style.backgroundColor = 'rgb(255, 255, 255)' : document.body.style.backgroundColor = 'rgb(32, 33, 36)';
-
+  const toastStyle = {
+    backgroundColor: `${theme === 'light' ? 'rgb(255, 255, 255)' : 'rgb(32, 33, 36)'}`,
+    border: `1px solid ${theme === 'light' ? 'rgb(254, 239, 195)' : 'rgb(129, 106, 70)'}`
+  }
   return (
     <>
-      <ToastContainer theme={theme} position="top-center" autoClose={2500} hideProgressBar={false} newestOnTop={false}
-        closeOnClick={false} pauseOnFocusLoss={false} draggable pauseOnHover={false} transition={Flip}
+      <ToastContainer theme={theme} position="top-center" autoClose={1500} hideProgressBar={true} newestOnTop={false}
+        closeOnClick={false} pauseOnFocusLoss={false} draggable={true} pauseOnHover={false} transition={Flip} closeButton={false}
+        toastStyle={toastStyle}
       />
       <Router>
         <NavBar />

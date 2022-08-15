@@ -107,10 +107,16 @@
   border: none;
 }
 
-.btn:focus {
+.btn-light:focus {
   outline: none !important;
   box-shadow: none !important;
-  background-color: none !important;
+  background-color: var(--active-light) !important;
+}
+
+.btn-dark:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: var(--active-dark) !important;
 }
 
 .btn-light:active {

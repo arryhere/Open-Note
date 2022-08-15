@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import LandingPage from './LandingPage';
 import Notes from './Notes';
+import AuthContext from '../context/auth/AuthContext';
 
 export default function Home() {
+
+  const authContext = useContext(AuthContext);
+  const { auth } = authContext;
+
   return (
     <>
       <div className='container'>
-        {localStorage.getItem('auth-token') === null || localStorage.getItem('auth-token') === 'null' || localStorage.getItem('auth-token') === ''
+        {auth === false
           ? <LandingPage />
           : <Notes />}
       </div>

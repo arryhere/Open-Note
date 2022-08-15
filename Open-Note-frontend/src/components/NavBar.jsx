@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import ThemeContext from '../context/theme/ThemeContext';
 import AuthContext from '../context/auth/AuthContext';
 
@@ -20,7 +21,8 @@ export default function NavBar() {
   const handleLogOut = () => {
     localStorage.removeItem('auth-token');
     setAuth(false);
-    navigate(0);
+    toast.success('Logout successful');
+    navigate('/');
   }
 
   const navigateProfile = () => {
@@ -36,7 +38,7 @@ export default function NavBar() {
         <div className="container-fluid">
           <div className={`logo-brand d-flex justify-content-center align-items-center`}>
             <img className='' src="logo192.png" alt="logo-open-note" height="40" />
-            <Link className={`navbar-brand fw-bold ms-1 me-3 text-${altTheme}`} to="/">Open Note</Link>
+            <Link className={`navbar-brand fw-bold ms-2 me-3 text-${altTheme}`} to="/">Open Note</Link>
           </div>
           <button className="navbar-toggler text-muted" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
             <span className={`text-${altTheme}`}><i className="bi bi-list"></i></span>
