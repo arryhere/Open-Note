@@ -9,12 +9,20 @@ class UserController {
     //user validation
     const { error, value } = UserValidaton.signupSchema.validate(req.body, { abortEarly: false });
     if (error) {
-      res.status(400).json({ success: false, message: 'Signup validation failed', data: error.details.map((e) => { return e.message.replace(/"/gi, '') }) });
+      res.status(400).json({
+        success: false,
+        message: 'Signup validation failed',
+        data: error.details.map((e) => { return e.message.replace(/"/gi, '') })
+      });
     } else {
       //check email in db
       const checkEmailExist = await UserModel.findOne({ email: value.email });
       if (checkEmailExist) {
-        res.status(400).json({ success: false, message: 'Email already exists', data: JSON.stringify(value) });
+        res.status(400).json({
+          success: false,
+          message: 'Email already exists, please try another email',
+          data: JSON.stringify(value)
+        });
       } else {
         //encryption
         const data = {
@@ -27,9 +35,17 @@ class UserController {
         const user = new UserModel(data);
         user.save((error, user) => {
           if (error) {
-            res.status(500).json({success: false,  message: 'Signup failed', data: error.message })
+            res.status(500).json({
+              success: false,
+              message: 'Signup failed, please try again',
+              data: error.message
+            })
           } else {
-            res.status(200).json({ success: true, message: 'Signup successful', data: UserAuthentication.authToken(user.id) })
+            res.status(200).json({
+              success: true,
+              message: 'Signup successful',
+              data: UserAuthentication.authToken(user.id)
+            })
           }
         })
       }
@@ -40,20 +56,36 @@ class UserController {
     //validation
     const { error, value } = UserValidaton.loginSchema.validate(req.body, { abortEarly: false });
     if (error) {
-      res.status(400).json({ success: false, message: 'Login validation failed', data: error.details.map((e) => { return e.message.replace(/"/gi, '') }) });
+      res.status(400).json({
+        success: false,
+        message: 'Login validation failed',
+        data: error.details.map((e) => { return e.message.replace(/"/gi, '') })
+      });
     } else {
       //check email in db
       const user = await UserModel.findOne({ email: value.email });
       if (!user) {
-        res.status(400).json({ success: false, message: 'Please enter proper credentials', data: null });
+        res.status(400).json({
+          success: false,
+          message: 'Login faiiled, please enter proper credentials',
+          data: null
+        });
       } else {
         //check password
         const passwordCompare = await UserEncryption.decrypt(value.password, user.password);
         if (!passwordCompare) {
-          res.status(400).json({ success: false, message: 'Please enter proper credentials', data: null });
+          res.status(400).json({
+            success: false,
+            message: 'Login faiiled, please enter proper credentials',
+            data: null
+          });
         } else {
           //send token if authenticated
-          res.status(200).json({ success: true, message: 'Login successful', data: UserAuthentication.authToken(user.id) });
+          res.status(200).json({
+            success: true,
+            message: 'Login successful',
+            data: UserAuthentication.authToken(user.id)
+          });
         }
       }
     }
