@@ -69,14 +69,12 @@
 
 .input-text-light:focus {
   border-color: var(--active-light) !important;
-  box-shadow: 0 1px 1px var(--active-light) inset, 0 0 8px var(--active-light) !important;
-  outline: 0 none !important;
+  box-shadow: 0 0 inset, 0 0 6px rgb(212, 212, 35) !important;
 }
 
 .input-text-dark:focus {
   border-color: var(--active-dark) !important;
-  box-shadow: 0 1px 1px var(--active-light) inset, 0 0 8px var(--active-light) !important;
-  outline: 0 none !important;
+  box-shadow: 0 0 inset, 0 0 6px rgb(255, 255, 90) !important;
 }
 
 .card-light:hover {
@@ -135,9 +133,10 @@ label{
 }
 
 input:disabled{
-  border: 1px solid rgb(255, 140, 140) !important;
+  border: 2px solid rgb(255, 140, 140) !important;
+  opacity: 0.6 !important;
 }
 
 .profile-border{
-  border: 1px solid rgb(140, 255, 194) !important;
+  border: 2px solid rgb(140, 224, 179) !important;
 }
